@@ -81,6 +81,10 @@ class ProfilePage extends StatelessWidget {
                         'teknik Informatika',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
+                      SizedBox(height: 20),
+                      const MyBio(),
+                      SizedBox(height: 20),
+                      const MyHobi(),
                     ],
                   ),
                 ),
@@ -89,6 +93,149 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Terima kasih telah melihat profile saya!'),
+            ),
+          );
+        },
+        backgroundColor: Colors.deepPurpleAccent,
+        child: Icon(Icons.favorite, color: Colors.white),
+      ),
+    );
+  }
+}
+
+class InfoTile extends StatelessWidget {
+  const InfoTile({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(label),
+      subtitle: Text(value),
+    );
+  }
+}
+
+class MyBio extends StatelessWidget {
+  const MyBio({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            'Kontak',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurpleAccent,
+            ),
+          ),
+        ),
+        Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              children: [
+                InfoTile(
+                  icon: Icons.email,
+                  label: 'email',
+                  value: 'ranikusuma@gmail.com',
+                ),
+                Divider(height: 1),
+                InfoTile(
+                  icon: Icons.phone,
+                  label: 'phone',
+                  value: '849327438274738',
+                ),
+                Divider(height: 1),
+                InfoTile(icon: Icons.class_, label: 'kelas', value: 'TI24PSE1'),
+                Divider(height: 1),
+                InfoTile(
+                  icon: Icons.code,
+                  label: 'github',
+                  value: 'MaharaniCantik',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MyHobi extends StatelessWidget {
+  const MyHobi({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            'Hobby',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurpleAccent,
+            ),
+          ),
+        ),
+        Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              children: [
+                InfoTile(
+                  icon: Icons.book_online_rounded,
+                  label: 'Novel',
+                  value: 'Bumi(tereliye)',
+                ),
+                Divider(height: 1),
+                InfoTile(
+                  icon: Icons.sports_gymnastics,
+                  label: 'taekwondo',
+                  value: 'Kyurigi',
+                ),
+                Divider(height: 1),
+                InfoTile(
+                  icon: Icons.sports_basketball,
+                  label: 'Sepak Takraw',
+                  value: 'Pemain tengah',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
