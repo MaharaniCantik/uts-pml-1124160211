@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soal2_profile_app/screens/login_page.dart';
 
 void main(){
   runApp(const MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF071E1A),
       ),
       themeMode: ThemeMode.system,
+      home: LoginPage(),
     );
   }
 }
