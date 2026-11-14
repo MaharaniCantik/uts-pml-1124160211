@@ -9,6 +9,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _login() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email == 'raniKusuma@gmail.com' && password == 'rani123') {
+      print('Berhasil Login');
+    } else {
+      print('email atau password salah');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                     Column(
                       children: [
                         TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             labelText: 'Email',
                             labelStyle: TextStyle(color: Colors.grey),
@@ -75,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          controller: _passwordController,
                           obscureText: _isObscure,
                           decoration: InputDecoration(
                             labelText: 'Password',
@@ -116,9 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                               horizontal: 100,
                             ),
                           ),
-                          onPressed: () {
-                            print('klik');
-                          },
+                          onPressed: _login,
                           child: Text('Login'),
                         ),
                       ],
