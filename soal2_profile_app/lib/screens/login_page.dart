@@ -12,14 +12,16 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  String _mesagge = '';
+
   void _login() {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
     if (email == 'raniKusuma@gmail.com' && password == 'rani123') {
-      print('Berhasil Login');
+      _mesagge = 'Login berhasil';
     } else {
-      print('email atau password salah');
+      _mesagge = 'Email atau password salah';
     }
   }
 
@@ -134,6 +136,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: _login,
                           child: Text('Login'),
+                        ),
+                        Text(
+                          _mesagge,
+                          style: TextStyle(
+                            color: _mesagge == 'login berhasil!'
+                                ? Colors.green
+                                : Colors.red,
+                          ),
                         ),
                       ],
                     ),
