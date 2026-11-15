@@ -3,7 +3,14 @@ import 'package:soal2_profile_app/models/profile.dart';
 import 'package:soal2_profile_app/screens/profile_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final bool isDarkMode;
+  final ValueChanged<bool> onThemeChanged;
+
+  const LoginPage({
+    super.key,
+    required this.isDarkMode,
+    required this.onThemeChanged,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -43,7 +50,12 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ProfilePage(profile: dataBaru),
+            builder: (context) => ProfilePage(
+              profile: dataBaru,
+              isDarkMode: widget.isDarkMode,
+              onThemeChanged: widget.onThemeChanged,
+
+            ),
           ),
         );
       } else {

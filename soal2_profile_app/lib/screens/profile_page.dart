@@ -5,7 +5,14 @@ import 'package:soal2_profile_app/screens/edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
-  const ProfilePage({super.key, required this.profile});
+  final bool isDarkMode;
+  final ValueChanged<bool> onThemeChanged;
+  const ProfilePage({
+    super.key,
+    required this.profile,
+    required this.isDarkMode,
+    required this.onThemeChanged,
+  });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -13,16 +20,24 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Profile profile;
+  late bool _isDarkMode;
   @override
   void initState() {
     super.initState();
     profile = widget.profile;
+    _isDarkMode = widget.isDarkMode;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF0FDF4),
+      appBar: AppBar(
+        title: Text('Profile'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 0,
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -59,20 +74,31 @@ class _ProfilePageState extends State<ProfilePage> {
                 print('Logout diklik');
               },
             ),
+            SwitchListTile(
+              secondary: Icon(Icons.dark_mode),
+              title: Text('Dark Mode'),
+              value: _isDarkMode,
+              onChanged: (value) {
+                setState(() {
+                  _isDarkMode = value;
+                });
+                widget.onThemeChanged(value);
+              },
+            ),
           ],
         ),
       ),
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 40, bottom: 30),
+          padding: EdgeInsets.only(top: 5, bottom: 30),
           child: Column(
             children: [
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(vertical: 30),
                 decoration: BoxDecoration(
-                  color: Color(0xFF047857),
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
@@ -111,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: 20),
               Card(
-                color: Color(0xFFECFDF5),
+                color: Theme.of(context).cardColor,
                 elevation: 3,
                 margin: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Padding(
@@ -124,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF047857),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       SizedBox(height: 20),
@@ -132,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         widget.profile.bio,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFF334155),
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ],
@@ -188,15 +214,18 @@ class InfoRow extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20),
       horizontalTitleGap: 16,
-      leading: Icon(icon, color: Color(0xFF047857)),
+      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
       title: Text(
         label,
-        style: TextStyle(color: Color(0xFF047857), fontWeight: FontWeight.w600),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       subtitle: Text(
         value,
         softWrap: true,
-        style: TextStyle(color: Color(0xFF334155)),
+        style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }
@@ -219,14 +248,14 @@ class MyKontak extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF047857),
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
 
         Card(
           elevation: 2,
-          color: Colors.white,
+           color: Theme.of(context).cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
