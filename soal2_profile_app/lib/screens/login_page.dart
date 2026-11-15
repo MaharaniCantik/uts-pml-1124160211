@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soal2_profile_app/models/profile.dart';
+import 'package:soal2_profile_app/screens/profile_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,21 +11,40 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   String _mesagge = '';
 
-  void _login() {
+  Future<void> _login() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+    await Future.delayed(Duration(seconds: 2));
     final email = _emailController.text.trim();
     final password = _passwordController.text;
+    final dataBaru = Profile(
+      nama: 'Rani Kusuma',
+      nim: '1124160211',
+      prodi: 'Teknik Informatika',
+      kelas: 'TI24PSE1',
+      email: 'raniKusuma@gmail.com',
+      noHp: '08123456789',
+      github: 'maharaniCantik',
+      bio: 'hai',
+    );
+    if (!mounted) return;
     setState(() {
+      _isLoading = true;
       if (email == 'raniKusuma@gmail.com' && password == 'rani123') {
-        _mesagge = 'Login berhasil!';
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfilePage(profile: dataBaru),
+          ),
+        );
       } else {
         _mesagge = 'Email atau password salah';
       }
@@ -84,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                 return 'Email tidak boleh kosong';
                               }
                               if (!value.contains('@') ||
-                                  !value.contains(',')) {
+                                  !value.contains('.')) {
                                 return 'Format email tidak valid';
                               }
                               return null;
@@ -166,8 +187,10 @@ class _LoginPageState extends State<LoginPage> {
                                 horizontal: 100,
                               ),
                             ),
-                            onPressed: _login,
-                            child: Text('Login'),
+                            onPressed: _isLoading ? null : _login,
+                            child: _isLoading
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : Text('Login'),
                           ),
                           Text(
                             _mesagge,
