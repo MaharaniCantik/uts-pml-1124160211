@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 5));
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     final dataBaru = Profile(
@@ -33,7 +33,8 @@ class _LoginPageState extends State<LoginPage> {
       email: 'raniKusuma@gmail.com',
       noHp: '08123456789',
       github: 'maharaniCantik',
-      bio: 'hai',
+      bio:
+          'Saya mahasiswa Teknik informatika semester 5, dengan konsentrasi sotfware engineering',
     );
     if (!mounted) return;
     setState(() {
