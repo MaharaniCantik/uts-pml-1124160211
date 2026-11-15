@@ -1,14 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:soal2_profile_app/models/profile.dart';
+import 'package:soal2_profile_app/screens/about_page.dart';
+import 'package:soal2_profile_app/screens/edit_profile_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final Profile profile;
   const ProfilePage({super.key, required this.profile});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late Profile profile;
+  @override
+  void initState() {
+    super.initState();
+    profile = widget.profile;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF0FDF4),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Color(0xFF047857)),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Dashboard'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('Tentang Saya'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHobby()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                print('Logout diklik');
+              },
+            ),
+          ],
+        ),
+      ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 40, bottom: 30),
@@ -75,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        profile.bio,
+                        widget.profile.bio,
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xFF334155),
@@ -89,6 +143,29 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final dataBaru = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditProfilePage(profile: widget.profile),
+            ),
+          );
+          if (!mounted) return;
+          if (dataBaru != null) {
+            setState(() {
+              profile = dataBaru;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Profile Berhasil diperbarui!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        },
+        child: Icon(Icons.edit),
       ),
     );
   }
