@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soal2_profile_app/screens/about_page.dart';
+
 
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({

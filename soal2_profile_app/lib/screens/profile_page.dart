@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:soal2_profile_app/models/profile.dart';
 import 'package:soal2_profile_app/screens/about_page.dart';
 import 'package:soal2_profile_app/screens/edit_profile_page.dart';
 import 'package:soal2_profile_app/screens/login_page.dart';
-import 'package:soal2_profile_app/widgets/info_row.dart';
 import 'package:soal2_profile_app/widgets/my_kontak.dart';
 import 'package:soal2_profile_app/widgets/profile_drawer.dart';
 
@@ -95,9 +96,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             CircleAvatar(
                               radius: 85,
-                              backgroundImage: AssetImage(
-                                'assets/image/profile.png',
-                              ),
+                              backgroundImage: profile.fotoProfil != null
+                                  ? FileImage(File(profile.fotoProfil!))
+                                  : const AssetImage('assets/image/profile.png')
+                                        as ImageProvider,
                             ),
                             SizedBox(height: 10),
                             Text(
@@ -168,6 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
       floatingActionButton: _selectedIndex == 0
           ? FloatingActionButton(
               onPressed: () async {
+                final messenger = ScaffoldMessenger.of(context);
                 final dataBaru = await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -180,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   setState(() {
                     profile = dataBaru;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  messenger.showSnackBar(
                     SnackBar(
                       content: Text('Profile Berhasil diperbarui!'),
                       backgroundColor: Colors.green,

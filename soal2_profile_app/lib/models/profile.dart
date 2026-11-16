@@ -1,4 +1,5 @@
 class Profile {
+  String? fotoProfil;
   String nama;
   String nim;
   String prodi;
@@ -9,6 +10,7 @@ class Profile {
   String bio;
 
   Profile({
+    required this.fotoProfil,
     required this.nama,
     required this.nim,
     required this.prodi,

@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     final dataBaru = Profile(
+      fotoProfil: null,
       nama: 'Rani Kusuma',
       nim: '1124160211',
       prodi: 'Teknik Informatika',

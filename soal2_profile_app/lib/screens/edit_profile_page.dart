@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:soal2_profile_app/models/profile.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -10,6 +13,19 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  XFile? _fotoProfil;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pilihFoto() async {
+    final XFile? foto = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (foto != null) {
+      setState(() {
+        _fotoProfil = foto;
+      });
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _editingController;
   late TextEditingController _emailController;
@@ -58,6 +74,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         kelas: _kelasController.text,
         github: _githubController.text,
         bio: _bioController.text,
+        fotoProfil: _fotoProfil?.path ?? widget.profile.fotoProfil,
       );
 
       Navigator.pop(context, dataBaru);
@@ -75,6 +92,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
             key: _formKey,
             child: Column(
               children: [
+                Center(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 55,
+                        backgroundImage: _fotoProfil != null
+                            ? FileImage(File(_fotoProfil!.path))
+                            : const AssetImage('assets/image/profile.png')
+                                  as ImageProvider,
+                      ),
+                      const SizedBox(height: 10),
+                      TextButton.icon(
+                        onPressed: _pilihFoto,
+                        icon: const Icon(Icons.camera_alt),
+                        label: const Text('Ganti Foto'),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _editingController,
                   validator: (value) {
