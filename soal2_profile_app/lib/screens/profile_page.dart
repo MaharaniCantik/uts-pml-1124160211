@@ -19,6 +19,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  int _selectedIndex = 0;
+  void _onItemTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   late Profile profile;
   late bool _isDarkMode;
   @override
@@ -89,7 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
 
-      body: SingleChildScrollView(
+      body: _selectedIndex == 0 ? 
+      SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 5, bottom: 30),
           child: Column(
@@ -169,7 +176,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-      ),
+      )
+      : const MyHobby(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final dataBaru = await Navigator.push(
@@ -193,6 +201,13 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         child: Icon(Icons.edit),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap:  _onItemTapped,
+        items: const [BottomNavigationBarItem(icon: Icon(Icons.person),
+        label: 'Profile'),
+        BottomNavigationBarItem(icon: Icon(Icons.info_outline),
+        label: 'Tentang Saya')]),
     );
   }
 }
