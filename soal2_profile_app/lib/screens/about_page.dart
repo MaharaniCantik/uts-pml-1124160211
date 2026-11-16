@@ -33,7 +33,7 @@ class MyHobby extends StatelessWidget {
             ),
             child: Column(
               children: [
-                InfoTile(icon: Icons.code, label: 'Aplikasi', value: 'apayah'),
+                InfoTile(icon: Icons.code, label: 'Aplikasi', value: 'Profile App'),
                 InfoTile(
                   icon: Icons.sports_gymnastics,
                   label: 'Taekwondo',
@@ -42,7 +42,7 @@ class MyHobby extends StatelessWidget {
                 InfoTile(
                   icon: Icons.extension,
                   label: 'Problem Solving',
-                  value: 'isi aja dh',
+                  value: 'Dapat mengatasi masalah dengan baik ',
                 ),
               ],
             ),
@@ -77,7 +77,7 @@ class MyHobby extends StatelessWidget {
                 InfoTile(
                   icon: Icons.business_sharp,
                   label: 'College',
-                  value: 'Global Intitute',
+                  value: 'Global Institute',
                 ),
               ],
             ),

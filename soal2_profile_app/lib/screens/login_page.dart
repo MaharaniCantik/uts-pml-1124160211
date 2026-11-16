@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } else {
+          _isLoading = false;
         _mesagge = 'Email atau password salah';
       }
     });
